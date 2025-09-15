@@ -1,0 +1,148 @@
+﻿
+<!--begin::App Main-->
+<main class="app-main">
+    <!--begin::App Content Header-->
+    <div class="app-content-header">
+        <!--begin::Container-->
+        <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+                <div class="col-sm-6"><h3 class="mb-0">Home</h3></div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Home</li>
+                    </ol>
+                </div>
+            </div>
+            <!--end::Row-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::App Content Header-->
+    <!--begin::App Content-->
+    <div class="app-content">
+        <div class="container-fluid p-0">
+            <div class="position-relative text-center text-white" style="height: 350px; background: url('@Url.Content("~/lib/admin-lte/img/university.jpeg")')  center/cover no-repeat;">
+                <div class="position-absolute top-50 start-50 translate-middle">
+                    <h1 class="display-4 fw-bold">Welcome to Our University</h1>
+                    <p class="lead">
+                        Founded in 1990, we are committed to academic excellence, innovation,
+                        and preparing students for real-world success.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--begin::Container-->
+        <div class="container-fluid">
+            <!--begin::Row-->
+            <!-- Second Row -->
+            <div class="row">
+                <!-- About the University -->
+                <div class="col-12">
+                    <div class="card shadow-sm bg-transparent border-0">
+                        <div class="card-body">
+                            <h2 class="card-title text-center">About Our University</h2>
+                            <p class="card-text">
+                                Our university is a leading institution of higher learning, recognized for its commitment to academic excellence, cutting-edge research, and a vibrant campus community. With a diverse range of undergraduate, graduate, and professional programs, we strive to equip students with the knowledge, skills, and critical thinking abilities needed to thrive in a rapidly changing world.
+
+                                Our campus fosters innovation, creativity, and collaboration, providing state-of-the-art facilities, modern laboratories, and extensive libraries. Beyond academics, students are encouraged to participate in cultural, social, and entrepreneurial activities, ensuring a well-rounded educational experience.
+
+                                We take pride in our distinguished faculty, who are experts in their fields, and our global network of partnerships that create unique opportunities for research, internships, and international exchange programs. At our university, every student is empowered to pursue their passions, contribute to society, and become a future leader in their chosen field.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class=" col-lg-4 col-12">
+                    <!--begin::Small Box Widget 3-->
+                    <div class="small-box text-bg-warning position-relative">
+                        <div class="inner">
+                            <h3>@ViewBag.TotalStudents</h3>
+                            <p>Students In Our University</p>
+                            <ul>
+                                @for (int i = 0; i < 2; i++)
+                                {
+                                    <li>@ViewBag.students[i].Name</li>
+                                }
+                                <p>...</p>
+                            </ul>
+                        </div>
+                        <svg class="small-box-icon"
+                             fill="currentColor"
+                             viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg"
+                             aria-hidden="true">
+                            <path d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"></path>
+                        </svg>
+                    </div>
+                    <!--end::Small Box Widget 3-->
+                </div>
+                <!--end::Col-->
+                <div class="col-lg-4 col-12">
+                    <!--begin::Small Box Widget 2-->
+                    <div class="small-box text-bg-success position-relative">
+                        <div class="inner">
+                            <h3> @ViewBag.TotalCourses</h3>
+                            <h4>Courses We Offer</h4>
+                            <ul>
+                                @for(int i = 0; i<2;i++)
+                                {
+                                    <li>@ViewBag.courses[i].Course_Name</li>
+                                }
+                                <p>...</p>
+                            </ul>
+                        </div>
+                        <svg class="small-box-icon"
+                             fill="currentColor"
+                             viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg"
+                             aria-hidden="true">
+                            <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z"></path>
+                    </div>
+                    <!--end::Small Box Widget 2-->
+                </div>
+                <!--end::Col-->
+                
+                <div class="col-lg-4 col-12">
+                    <!--begin::Small Box Widget 4-->
+                    <div class="small-box text-bg-danger position-relative">
+                        <div class="inner">
+                            <h3> @ViewBag.TotalMajors</h3>
+                            <h4>Number of Majors </h4>
+                            <h4>Our University Offer</h4>
+                            <ul>
+                                @for (int i = 0; i < 2; i++)
+                                {
+                                    <li>@ViewBag.majors[i].Name</li>
+                                }
+                                <p>...</p>
+                            </ul>
+                        </div>
+                        <svg class="small-box-icon"
+                             fill="currentColor"
+                             viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg"
+                             aria-hidden="true">
+                            <path clip-rule="evenodd"
+                                  fill-rule="evenodd"
+                                  d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z"></path>
+                            <path clip-rule="evenodd"
+                                  fill-rule="evenodd"
+                                  d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z"></path>
+                        </svg>
+                    </div>
+                    <!--end::Small Box Widget 4-->
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Row-->
+                <!-- /.Start col -->
+           
+            <!-- /.row (main row) -->
+        </div>
+    </div>
+    <!--end::App Content-->
+</main>
