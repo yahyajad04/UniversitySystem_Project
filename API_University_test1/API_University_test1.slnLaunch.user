@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
