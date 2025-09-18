@@ -1,0 +1,294 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_University_test1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\controllers\\coursescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\controllers\\majorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\controllers\\studentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Data\\Migrations\\20250918213039_m1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Data\\Migrations\\20250918212506_mmm5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE6A723E-2C3B-41D3-9621-1DC182FB58E1}|API_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_university_test1\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{FE6A723E-2C3B-41D3-9621-1DC182FB58E1}|API_University_test1.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE6A723E-2C3B-41D3-9621-1DC182FB58E1}|API_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_university_test1\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{FE6A723E-2C3B-41D3-9621-1DC182FB58E1}|API_University_test1.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE6A723E-2C3B-41D3-9621-1DC182FB58E1}|API_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_university_test1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE6A723E-2C3B-41D3-9621-1DC182FB58E1}|API_University_test1.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\views\\students\\enroll.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\models\\courses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CoursesController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Controllers\\CoursesController.cs",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Controllers\\CoursesController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Controllers\\CoursesController.cs",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\Controllers\\CoursesController.cs",
+              "ViewState": "AgIAAG4AAAAAAAAAAAAswAsAAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T21:40:28.434Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAAAHcAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-18T21:10:41.865Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MajorsController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Controllers\\MajorsController.cs",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Controllers\\MajorsController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Controllers\\MajorsController.cs",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\Controllers\\MajorsController.cs",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAswAwAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T20:01:55.451Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\wwwroot\\css\\site.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-09-13T23:12:12.085Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAA3wCcAAABoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T18:17:32.769Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Courses.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Models\\Courses.cs",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Models\\Courses.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Models\\Courses.cs",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\Models\\Courses.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T18:55:43.064Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\appsettings.json",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\appsettings.json",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\appsettings.json",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-09-14T14:48:30.02Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_University_test1\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_University_test1\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T13:55:58.628Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StudentsController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Controllers\\StudentsController.cs",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Controllers\\StudentsController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Controllers\\StudentsController.cs",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\Controllers\\StudentsController.cs",
+              "ViewState": "AgIAAN8BAAAAAAAAAAAqwNYBAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T14:24:40.99Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "20250918213039_m1.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Data\\Migrations\\20250918213039_m1.cs",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Data\\Migrations\\20250918213039_m1.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Data\\Migrations\\20250918213039_m1.cs",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\Data\\Migrations\\20250918213039_m1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T21:30:40.067Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "20250918212506_mmm5.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Data\\Migrations\\20250918212506_mmm5.cs",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Data\\Migrations\\20250918212506_mmm5.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Data\\Migrations\\20250918212506_mmm5.cs",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\Data\\Migrations\\20250918212506_mmm5.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T21:25:06.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_University_test1\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_University_test1\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-09-14T13:21:32.044Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_University_test1\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "appsettings.Development.json",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_University_test1\\appsettings.Development.json",
+              "RelativeToolTip": "appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-09-18T21:22:03.905Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Program.cs",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Program.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Program.cs",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T21:08:01.729Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Enroll.cshtml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Students\\Enroll.cshtml",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Views\\Students\\Enroll.cshtml",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Students\\Enroll.cshtml",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\Views\\Students\\Enroll.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-13T21:24:43.005Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-12T10:30:59.007Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "_LoginPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Shared\\_LoginPartial.cshtml",
+              "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Views\\Shared\\_LoginPartial.cshtml",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Shared\\_LoginPartial.cshtml",
+              "RelativeToolTip": "..\\API_Consumer_University_test1\\Views\\Shared\\_LoginPartial.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-13T21:28:10.185Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
