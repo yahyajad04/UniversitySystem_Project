@@ -1,0 +1,61 @@
+﻿@model API_Consumer_University_test1.Models.Students
+
+@{
+    ViewData["Title"] = "ShowProfile";
+}
+@if(TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<h1>Your Info</h1>
+
+<div>
+    <h4>Students</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.hours_term)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.hours_term)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.reciept)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.reciept)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Major)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Major.Name)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="EditStudent" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+</div>

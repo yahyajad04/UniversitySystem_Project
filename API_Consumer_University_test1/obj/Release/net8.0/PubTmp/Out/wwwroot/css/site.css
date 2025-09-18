@@ -1,0 +1,84 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+.content-wrapper {
+    background-color: #181818 !important; /* dark background */
+    color: #f0f0f0 !important; /* light text */
+    min-height: 100vh; /* ensures it stretches full height */
+}
+.logout-wrapper:hover {
+    background-color: #464f56;
+}
+
+    .logout-wrapper:hover button {
+        color: #fff;
+    }
+.main-footer {
+    background-color: #181818 !important; /* same dark background as content */
+    color: #f0f0f0 !important; /* same light text */
+    text-align: center; /* center text */
+    padding: 10px 0; /* some vertical padding */
+}
+
+    .main-footer a {
+        color: #f0f0f0 !important; /* light link text */
+        text-decoration: none;
+    }
+
+        .main-footer a:hover {
+            color: #ccc !important; /* slightly lighter on hover */
+            text-decoration: underline;
+        }
+.small-box {
+    min-height: 150px; /* make all widgets equal height */
+    max-height: 150px; /* lock height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+
+
+
+    .small-box .inner h3 {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+.small-box-icon {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 0.3;
+}
+.small-box .inner {
+    overflow-y: auto; /* adds scrollbar if text is too long */
+    max-height: 200px; /* adjust so it fits inside box */
+    padding-right: 5px; /* avoid text under scrollbar */
+}
+    .small-box .inner::-webkit-scrollbar {
+        display: none; /* Chrome, Safari */
+    }

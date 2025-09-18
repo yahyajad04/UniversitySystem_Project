@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<link rel="stylesheet" href="~/lib/bootswatch/darkly/bootstrap.css" />
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" style="color:lightgrey">@User.Identity?.Name!</a>
+    </li>
+    <li class="nav-item">
+        <div class="logout-wrapper">
+            <form class="d-flex" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-start" style="color:lightgrey">Logout</button>
+            </form>
+        </div>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+                <a class="nav-link" style="color:lightgrey" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
+}

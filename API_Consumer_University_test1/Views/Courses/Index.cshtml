@@ -1,0 +1,48 @@
+﻿@model IEnumerable<API_Consumer_University_test1.Models.Courses>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Available Courses</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Course_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Teacher_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course_Hours)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course_Hours)
+            </td>
+            <td>
+                <div class="d-flex gap-2">
+                    <a asp-controller="Courses" asp-action="DeleteConfirmed" asp-route-courseId="@item.Id" class="btn btn-danger">Delete</a>
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+<a asp-action="CreateCourse" class="btn btn-primary">Create Course</a>

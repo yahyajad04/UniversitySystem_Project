@@ -1,0 +1,47 @@
+﻿@model IEnumerable<API_Consumer_University_test1.Models.Majors>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Majors</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Major Name")
+            </th>
+            <th>
+                @Html.DisplayName("Total Hours")
+            </th>
+            <th>
+                @Html.DisplayName("Cost/Hour")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.major_hours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.major_cost_hour)
+                <a>JD</a>
+            </td>
+            <td>
+                <div class="d-flex gap-2">
+                    <a asp-controller="Majors" asp-action="DeleteConfirmed" asp-route-majorId="@item.Id" class="btn btn-danger">Delete</a>
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-action="CreateMajor" class="btn btn-primary">Create Major</a>
