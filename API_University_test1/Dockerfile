@@ -2,11 +2,11 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 
-# Copy csproj and restore
+# Copy the csproj and restore
 COPY *.csproj ./
 RUN dotnet restore
 
-# Copy all files and publish
+# Copy everything else and publish
 COPY . ./
 RUN dotnet publish -c Release -o /app
 
