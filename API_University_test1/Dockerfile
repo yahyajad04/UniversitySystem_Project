@@ -1,18 +1,32 @@
-# Stage 1: Build
+# Use the .NET SDK image for building
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+
 WORKDIR /src
 
-# Copy the csproj and restore
-COPY *.csproj ./
-RUN dotnet restore
+# Copy the .csproj file from your project folder
+COPY ["API_University_test1/API_University_test1.csproj", "API_University_test1/"]
 
-# Copy everything else and publish
-COPY . ./
-RUN dotnet publish -c Release -o /app
+# Restore dependencies
+RUN dotnet restore "API_University_test1/API_University_test1.csproj"
 
-# Stage 2: Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+# Copy all source code
+COPY . .
+
+# Publish the app to the /app/publish folder
+RUN dotnet publish "API_University_test1/API_University_test1.csproj" -c Release -o /app/publish
+
+# Use the smaller runtime image for the final container
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
 WORKDIR /app
-COPY --from=build /app .
-EXPOSE 80
+
+# Copy the published output
+COPY --from=build /app/publish .
+
+# Create the SQLite data folder
+RUN mkdir -p /app/App_Data
+
+# Expose port 8080 (Render uses this)
+EXPOSE 8080
+
+# Run the app
 ENTRYPOINT ["dotnet", "API_University_test1.dll"]
