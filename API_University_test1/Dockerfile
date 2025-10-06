@@ -1,5 +1,5 @@
-# Use the .NET SDK image for building
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+# Use the .NET 8 SDK image for building
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 WORKDIR /src
 
@@ -15,8 +15,8 @@ COPY . .
 # Publish the app to the /app/publish folder
 RUN dotnet publish "API_University_test1/API_University_test1.csproj" -c Release -o /app/publish
 
-# Use the smaller runtime image for the final container
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+# Use the smaller .NET 8 runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 
 # Copy the published output
@@ -25,7 +25,7 @@ COPY --from=build /app/publish .
 # Create the SQLite data folder
 RUN mkdir -p /app/App_Data
 
-# Expose port 8080 (Render uses this)
+# Expose port 8080 (Render default)
 EXPOSE 8080
 
 # Run the app
