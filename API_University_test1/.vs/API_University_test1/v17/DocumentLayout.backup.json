@@ -6,6 +6,9 @@
       "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\views\\students\\regesteredcourses.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\views\\courses\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
@@ -13,9 +16,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\views\\teachers\\registeredcourses.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\views\\students\\regesteredcourses.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{30C2BCB7-C4B6-441A-A909-13601AA86245}|..\\API_Consumer_University_test1\\API_Consumer_University_test1.csproj|c:\\users\\asus\\desktop\\web-projects-course\\api_consumer_university_test1\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -59,14 +59,14 @@
               "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Program.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Program.cs",
               "RelativeToolTip": "..\\API_Consumer_University_test1\\Program.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAAwEMAAABBAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAgwC0AAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T18:23:49.26Z",
+              "WhenOpened": "2025-10-06T21:08:23.029Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "RegesteredCourses.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Students\\RegesteredCourses.cshtml",
               "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Views\\Students\\RegesteredCourses.cshtml",
@@ -79,20 +79,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "RegisteredCourses.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Teachers\\RegisteredCourses.cshtml",
               "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Views\\Teachers\\RegisteredCourses.cshtml",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Teachers\\RegisteredCourses.cshtml",
               "RelativeToolTip": "..\\API_Consumer_University_test1\\Views\\Teachers\\RegisteredCourses.cshtml",
-              "ViewState": "AgIAACcAAAAAAAAAAIBJwDsAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAADsAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-03T20:10:30.322Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T20:10:30.322Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Courses\\Index.cshtml",
               "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Views\\Courses\\Index.cshtml",
@@ -111,23 +110,21 @@
               "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Controllers\\CoursesController.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Controllers\\CoursesController.cs",
               "RelativeToolTip": "..\\API_Consumer_University_test1\\Controllers\\CoursesController.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAAA1wAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T20:05:23.46Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T20:05:23.46Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ApproveCourse.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Home\\ApproveCourse.cshtml",
               "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Views\\Home\\ApproveCourse.cshtml",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Home\\ApproveCourse.cshtml",
               "RelativeToolTip": "..\\API_Consumer_University_test1\\Views\\Home\\ApproveCourse.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAIBJwAwAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-03T20:02:36.178Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T20:02:36.178Z"
             },
             {
               "$type": "Document",
@@ -137,10 +134,9 @@
               "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Controllers\\HomeController.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Controllers\\HomeController.cs",
               "RelativeToolTip": "..\\API_Consumer_University_test1\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAA6wE8AAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAAAmwE8AAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T19:52:32.141Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T19:52:32.141Z"
             },
             {
               "$type": "Document",
@@ -152,8 +148,7 @@
               "RelativeToolTip": "Controllers\\CoursesController.cs",
               "ViewState": "AgIAAKoAAAAAAAAAAAAswLwAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T19:50:26.064Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T19:50:26.064Z"
             },
             {
               "$type": "Document",
@@ -165,8 +160,7 @@
               "RelativeToolTip": "..\\API_Consumer_University_test1\\Views\\Students\\Enroll.cshtml",
               "ViewState": "AgIAADwAAAAAAAAAAAAAwEwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-03T20:22:01.174Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T20:22:01.174Z"
             },
             {
               "$type": "Document",
@@ -178,8 +172,7 @@
               "RelativeToolTip": "Controllers\\StudentsController.cs",
               "ViewState": "AgIAAOMAAAAAAAAAAAAswKgAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T20:14:38.781Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T20:14:38.781Z"
             },
             {
               "$type": "Document",
@@ -189,10 +182,9 @@
               "RelativeDocumentMoniker": "..\\API_Consumer_University_test1\\Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\web-projects-course\\API_Consumer_University_test1\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "..\\API_Consumer_University_test1\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAIgAAAAAAAAAAEBVwJ0AAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAAAJ0AAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-03T20:06:03.205Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T20:06:03.205Z"
             }
           ]
         }
