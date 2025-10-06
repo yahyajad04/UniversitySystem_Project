@@ -3,9 +3,11 @@ using API_Consumer_University_test1.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -35,7 +37,7 @@ namespace API_Consumer_University_test1.Controllers
             {
                 string data = await response.Content.ReadAsStringAsync();
                 student = JsonConvert.DeserializeObject<List<Students>>(data);
-            }   
+            }
             return View(student);
         }
         [HttpGet]
@@ -61,7 +63,7 @@ namespace API_Consumer_University_test1.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles ="Student")]
+        [Authorize(Roles = "Student")]
         public async Task<IActionResult> ShowProfile()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -71,7 +73,7 @@ namespace API_Consumer_University_test1.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var UserId = user.Id;
-           
+
             List<Students> students = new List<Students>();
             HttpResponseMessage response = await _httpClient.GetAsync(address_GetStudents);
             if (response.IsSuccessStatusCode)
@@ -79,9 +81,9 @@ namespace API_Consumer_University_test1.Controllers
                 string data = await response.Content.ReadAsStringAsync();
                 students = JsonConvert.DeserializeObject<List<Students>>(data);
             }
-            foreach(var student in students)
+            foreach (var student in students)
             {
-                if(student.UserId == UserId)
+                if (student.UserId == UserId)
                 {
                     return View(student);
                 }
@@ -89,8 +91,8 @@ namespace API_Consumer_University_test1.Controllers
             TempData["ErrorMessage"] = "Failed to get the student Profile";
             return RedirectToAction("Index", "Home");
         }
-        [Authorize(Roles ="Student")]
-        public async Task<IActionResult> Enroll()
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> Enroll(string sortField = "Course_Name", string sortOrder = "asc")
         {
             List<Courses> course = new List<Courses>();
             HttpResponseMessage response = await _httpClient.GetAsync("http://localhost:5134/api/Courses");
@@ -99,6 +101,38 @@ namespace API_Consumer_University_test1.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 course = JsonConvert.DeserializeObject<List<Courses>>(data);
             }
+            if (course != null)
+            {
+
+                foreach (var course1 in course)
+                {
+                    if (course1.isDone == null)
+                    {
+                        course1.isDone = 0;
+                    }
+                }
+                course.RemoveAll(c => c.isDone > 0);
+                switch (sortField)
+                {
+                    case "Course_Name":
+                        course = sortOrder == "desc"
+                            ? course.OrderByDescending(c => c.Course_Name).ToList()
+                            : course.OrderBy(c => c.Course_Name).ToList();
+                        break;
+
+                    case "Id":
+                        course = sortOrder == "desc"
+                            ? course.OrderByDescending(c => c.Id).ToList()
+                            : course.OrderBy(c => c.Id).ToList();
+                        break;
+
+                    case "Teacher_Name":
+                        course = sortOrder == "desc"
+                            ? course.OrderByDescending(c => c.Teacher.Teacher_Name).ToList()
+                            : course.OrderBy(c => c.Teacher.Teacher_Name).ToList();
+                        break;
+                }
+            }
             return View(course);
         }
         [HttpPost]
@@ -106,10 +140,10 @@ namespace API_Consumer_University_test1.Controllers
         public async Task<IActionResult> EnrollCourse(int courseId)
         {
             List<Courses> courses = new List<Courses>();
-            HttpResponseMessage response2 = _httpClient.GetAsync("http://localhost:5134/api/Courses").Result;
+            HttpResponseMessage response2 = await _httpClient.GetAsync("http://localhost:5134/api/Courses");
             if (response2.IsSuccessStatusCode)
             {
-                string data2 = response2.Content.ReadAsStringAsync().Result;
+                string data2 = await response2.Content.ReadAsStringAsync();
                 courses = JsonConvert.DeserializeObject<List<Courses>>(data2);
             }
             string userId = _userManager.GetUserId(User);
@@ -122,12 +156,12 @@ namespace API_Consumer_University_test1.Controllers
 
             string data = await response1.Content.ReadAsStringAsync();
             var student = JsonConvert.DeserializeObject<Students>(data);
-            foreach(var course in courses)
+            foreach (var course in courses)
             {
                 if (course.Id == courseId)
                 {
                     student.hours_term += course.Course_Hours;
-                    if(student.hours_term > 18)
+                    if (student.hours_term > 18)
                     {
                         student.hours_term -= course.Course_Hours;
                         TempData["ErrorMessage"] = "Failed to Enroll: You exceeded the maximum hours in term";
@@ -216,7 +250,7 @@ namespace API_Consumer_University_test1.Controllers
             }
         }
         [HttpGet]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateStudent()
         {
             List<Majors> majors = new List<Majors>();
@@ -265,7 +299,7 @@ namespace API_Consumer_University_test1.Controllers
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
-                ModelState.AddModelError("", error.Description);
+                    ModelState.AddModelError("", error.Description);
                 ViewBag.Majors = majors;
                 return View(student);
             }
@@ -362,31 +396,91 @@ namespace API_Consumer_University_test1.Controllers
             return RedirectToAction("Index");
         }
 
+        //[HttpGet]
+        //[Authorize(Roles = "Student")]
+        //public async Task<IActionResult> RegesteredCourses()
+        //{
+        //    var UserId = _userManager.GetUserId(User);
+        //    if (UserId == null)
+        //        return RedirectToAction("Index");
+
+        //    List<Students> students = new List<Students>();
+        //    HttpResponseMessage response = _httpClient.GetAsync(address_GetStudents).Result;
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        string data = response.Content.ReadAsStringAsync().Result;
+        //        students = JsonConvert.DeserializeObject<List<Students>>(data);
+        //    }
+
+        //    foreach (var student in students)
+        //    {
+        //        if (student.UserId == UserId)
+        //        {
+        //            foreach (var course in student.courses) {
+        //                Debug.WriteLine(course.TeacherId + " The name is " + course.Teacher.Teacher_Name + " " + course.Teacher.Email);
+        //            }
+
+        //            return View(student);
+        //        }
+        //    }
+        //    return RedirectToAction("Index");
+        //}
         [HttpGet]
         [Authorize(Roles = "Student")]
-        public async Task<IActionResult> RegesteredCourses()
+        public async Task<IActionResult> RegesteredCourses(string sortField = "Course_Name", string sortOrder = "asc")
         {
-            var UserId = _userManager.GetUserId(User);
-            if (UserId == null)
+            var userId = _userManager.GetUserId(User);
+            if (userId == null)
                 return RedirectToAction("Index");
 
             List<Students> students = new List<Students>();
-            HttpResponseMessage response = _httpClient.GetAsync(address_GetStudents).Result;
+            HttpResponseMessage response = await _httpClient.GetAsync(address_GetStudents);
             if (response.IsSuccessStatusCode)
             {
-                string data = response.Content.ReadAsStringAsync().Result;
+                string data = await response.Content.ReadAsStringAsync();
                 students = JsonConvert.DeserializeObject<List<Students>>(data);
             }
 
             foreach (var student in students)
             {
-                if (student.UserId == UserId)
+                if (student.UserId == userId)
                 {
+                    
+                    if (student.courses != null)
+                    {
+                        student.courses = student.courses
+                        .Where(c => c.isDone == 0 || c.isDone==null) // only unfinished courses
+                        .ToList();
+
+                        switch (sortField)
+                        {
+                            case "Course_Name":
+                                student.courses = sortOrder == "desc"
+                                    ? student.courses.OrderByDescending(c => c.Course_Name).ToList()
+                                    : student.courses.OrderBy(c => c.Course_Name).ToList();
+                                break;
+
+                            case "Id":
+                                student.courses = sortOrder == "desc"
+                                    ? student.courses.OrderByDescending(c => c.Id).ToList()
+                                    : student.courses.OrderBy(c => c.Id).ToList();
+                                break;
+
+                            case "Teacher_Name":
+                                student.courses = sortOrder == "desc"
+                                    ? student.courses.OrderByDescending(c => c.Teacher.Teacher_Name).ToList()
+                                    : student.courses.OrderBy(c => c.Teacher.Teacher_Name).ToList();
+                                break;
+                        }
+                    }
+
                     return View(student);
-                }  
+                }
             }
+
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditStudentAdmin(int id)
@@ -401,8 +495,8 @@ namespace API_Consumer_University_test1.Controllers
             return View(student);
         }
         [HttpPost]
-        [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> EditStudentAdmin(int id,string name,string email, int hours_term , double reciept)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> EditStudentAdmin(int id, string name, string email, int hours_term, double reciept)
         {
             var student = await _httpClient.GetFromJsonAsync<Students>($"http://localhost:5134/api/Students/{id}");
 
@@ -461,7 +555,7 @@ namespace API_Consumer_University_test1.Controllers
                 TempData["ErrorMessage"] = "Student couldnt be found";
                 return RedirectToAction("ShowProfile");
             }
-            var EmailUser = student.Email; 
+            var EmailUser = student.Email;
             var user = await _userManager.FindByEmailAsync(EmailUser);
             if (user == null)
             {
@@ -487,6 +581,108 @@ namespace API_Consumer_University_test1.Controllers
                 return RedirectToAction("ShowProfile");
             }
             return RedirectToAction("ShowProfile");
+        }
+        [HttpGet]
+        [Authorize(Roles ="Teacher")]
+        public async Task<IActionResult> EditGrade(int studentId, int courseId)
+        {
+            var studentGrade = await _httpClient.GetFromJsonAsync<Grades>($"http://localhost:5134/api/Students/{studentId}/{courseId}/GetGrade");
+
+            if (studentGrade == null)
+            {
+                TempData["ErrorMessage"] = "Student couldnt be found";
+                return RedirectToAction("StudentsinCourse", "Teachers");
+            }
+            return View(studentGrade);
+            
+        }
+        [HttpPost]
+        [Authorize(Roles = "Teacher")]
+        public async Task<IActionResult> EditGrade(int studentId, int courseId, int first, int second, int final)
+        {
+            Students student = new Students();
+            HttpResponseMessage response = _httpClient.GetAsync($"{address_GetStudents}/{studentId}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                student = JsonConvert.DeserializeObject<Students>(data);
+            }
+
+            if (student == null)
+            {
+                TempData["ErrorMessage"] = "Student couldnt be found";
+                return RedirectToAction("StudentsinCourse", "Teachers");
+            }
+
+            foreach (var course in student.courses)
+            {
+                if (course.Id == courseId)
+                {
+                    var putUrl = $"http://localhost:5134/api/Students/{studentId}/{courseId}/Grade?first={first}&second={second}&final={final}";
+                    var putResponse = await _httpClient.PutAsync(putUrl, null);
+                    if (!putResponse.IsSuccessStatusCode)
+                    {
+                        TempData["ErrorMessage"] = "Failed to Edit values: put response failed.";
+                        return RedirectToAction("StudentsinCourse", "Teachers");
+                    }
+                }
+            }
+            return RedirectToAction("StudentsinCourse", "Teachers", new { courseId = courseId });
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> FinishedCourses(string sortField="Course_Name",string sortOrder="asc")
+        {
+            var userId = _userManager.GetUserId(User);
+            if (userId == null)
+                return RedirectToAction("Index");
+
+            List<Students> students = new List<Students>();
+            HttpResponseMessage response = await _httpClient.GetAsync(address_GetStudents);
+            if (response.IsSuccessStatusCode)
+            {
+                string data = await response.Content.ReadAsStringAsync();
+                students = JsonConvert.DeserializeObject<List<Students>>(data);
+            }
+
+            foreach (var student in students)
+            {
+                if (student.UserId == userId)
+                {
+
+                    if (student.courses != null)
+                    {
+                        student.courses = student.courses
+                        .Where(c => c.isDone == 1) // only unfinished courses
+                        .ToList();
+
+                        switch (sortField)
+                        {
+                            case "Course_Name":
+                                student.courses = sortOrder == "desc"
+                                    ? student.courses.OrderByDescending(c => c.Course_Name).ToList()
+                                    : student.courses.OrderBy(c => c.Course_Name).ToList();
+                                break;
+
+                            case "Id":
+                                student.courses = sortOrder == "desc"
+                                    ? student.courses.OrderByDescending(c => c.Id).ToList()
+                                    : student.courses.OrderBy(c => c.Id).ToList();
+                                break;
+
+                            case "Teacher_Name":
+                                student.courses = sortOrder == "desc"
+                                    ? student.courses.OrderByDescending(c => c.Teacher.Teacher_Name).ToList()
+                                    : student.courses.OrderBy(c => c.Teacher.Teacher_Name).ToList();
+                                break;
+                        }
+                    }
+
+                    return View(student);
+                }
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

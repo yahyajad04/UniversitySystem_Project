@@ -12,31 +12,68 @@
 }
 <h2>Enroll in Courses</h2>
 
-<table class="table">
-    <thead>
-        <tr class="table-success">
-            <th scope ="col">Course ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Teacher</th>
-            <th scope="col">Hours</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var course in Model)
+<form asp-action="Enroll" method="get" class="d-flex gap-2 mb-3">
+    <select name="sortField" class="form-select">
+        <option value="Course_Name">Course Name</option>
+        <option value="Id">Course ID</option>
+        <option value="Teacher_Name">Teacher Name</option>
+    </select>
+
+    <select name="sortOrder" class="form-select">
+        <option value="asc">A-Z</option>
+        <option value="desc">Z-A</option>
+    </select>
+
+    <button type="submit" class="btn btn-primary">Sort</button>
+</form>
+<div class="row mb-12 g-6">
+    @foreach (var course in Model)
+    {
+        if (course.isApproved == 2)
         {
-            <tr>
-                <td>@course.Id</td>
-                <td >@course.Course_Name</td>
-                <td>@course.Teacher_Name</td>
-                <td>@course.Course_Hours</td>
-                <td>
-                    <form asp-action="EnrollCourse" method="post">
-                        <input type="hidden" name="courseId" value="@course.Id" />
-                        <button type="submit" class="btn btn-primary">Enroll</button>
-                    </form>
-                </td>
-            </tr>
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                <div class="card-body">
+                    <h4>@course.Course_Name.ToUpper()</h4>
+                    <div>
+                        <hr />
+                        <dl class="row">
+
+                            <dt class="col-sm-5">
+                                @Html.DisplayName("ID")
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => course.Id)
+                            </dd>
+                            <dt class="col-sm-5">
+                                @Html.DisplayName("Course Name")
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => course.Course_Name)
+                            </dd>
+                            <dt class="col-sm-5">
+                                @Html.DisplayName("Teacher Name")
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => course.Teacher.Teacher_Name)
+                            </dd>
+                            <dt class="col-sm-5">
+                                @Html.DisplayName("Course Hours")
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => course.Course_Hours)
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <form asp-action="EnrollCourse" method="post">
+                            <input type="hidden" name="courseId" value="@course.Id" />
+                            <button type="submit" class="btn btn-primary">Enroll</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         }
-    </tbody>
-</table>
+    }
+</div>

@@ -63,11 +63,10 @@
                             <h3>@ViewBag.TotalStudents</h3>
                             <p>Students In Our University</p>
                             <ul>
-                                @for (int i = 0; i < Math.Min(2, ViewBag.students.Count); i++)
+                                @foreach (var student in ViewBag.students)
                                 {
-                                    <li>@ViewBag.students[i].Name</li>
+                                    <li>@student.Name</li>
                                 }
-                                <p>...</p>
                             </ul>
                         </div>
                         <svg class="small-box-icon"
@@ -88,11 +87,10 @@
                             <h3> @ViewBag.TotalCourses</h3>
                             <h4>Courses We Offer</h4>
                             <ul>
-                                @for (int i = 0; i < Math.Min(2, ViewBag.courses.Count); i++)
+                                @foreach (var course in ViewBag.courses)
                                 {
-                                    <li>@ViewBag.courses[i].Course_Name</li>
+                                    <li>@course.Course_Name</li>
                                 }
-                                <p>...</p>
                             </ul>
                         </div>
                         <svg class="small-box-icon"
@@ -114,11 +112,10 @@
                             <h4>Number of Majors </h4>
                             <h4>Our University Offer</h4>
                             <ul>
-                                @for (int i = 0; i < Math.Min(2, ViewBag.majors.Count); i++)
+                                @foreach (var major in ViewBag.majors)
                                 {
-                                    <li>@ViewBag.majors[i].Name</li>
+                                    <li>@major.Name</li>
                                 }
-                                <p>...</p>
                             </ul>
                         </div>
                         <svg class="small-box-icon"

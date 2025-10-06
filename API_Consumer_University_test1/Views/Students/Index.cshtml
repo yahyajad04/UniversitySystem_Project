@@ -13,60 +13,56 @@
 
 <h1>Students Registered</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Major.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.hours_term)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.reciept)
-            </th>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Major.Name)
-            </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.hours_term)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.reciept)
-                </td>
-           
-                <td>
-                    <div class="d-flex gap-2">
-                        <a asp-action="DeleteConfirmed" asp-route-studentId="@item.Id" class="btn btn-danger">Delete</a>
-                        <a asp-action="ShowProfileAdmin" class="btn btn-info" asp-route-id="@item.Id">Profile</a>
-                        <a asp-action="EditStudentAdmin" class="btn btn-warning" asp-route-id="@item.Id">Edit</a>
+<div class="row mb-12 g-6">
+    @foreach (var student in Model)
+    {
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4>@student.Name.ToUpper()</h4>
+                    <div>
+                        <hr />
+                        <dl class="row">
+
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => student.Email)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => student.Email)
+                            </dd>
+                            
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("Major")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => student.Major.Name)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("hours/term")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => student.hours_term)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("Reciept")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => student.reciept)
+                            </dd>
+
+                        </dl>
                     </div>
-                </td>
-                <td>
-                   
-                </td>
-        </tr>
-}
-    </tbody>
-</table>
+                    <div class="d-flex gap-2">
+                        <a asp-action="DeleteConfirmed" asp-route-studentId="@student.Id" class="btn btn-danger">Delete</a>
+                        <a asp-action="ShowProfileAdmin" class="btn btn-info" asp-route-id="@student.Id">Profile</a>
+                        <a asp-action="EditStudentAdmin" class="btn btn-warning" asp-route-id="@student.Id">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 <a asp-action="CreateStudent" class="btn btn-primary">Create Student</a>

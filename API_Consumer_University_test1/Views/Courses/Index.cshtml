@@ -3,46 +3,71 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Available Courses</h1>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Course_Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Teacher_Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Course_Hours)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Course_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Teacher_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Course_Hours)
-            </td>
-            <td>
-                <div class="d-flex gap-2">
-                    <a asp-controller="Courses" asp-action="DeleteConfirmed" asp-route-courseId="@item.Id" class="btn btn-danger">Delete</a>
-                </div>
-            </td>
-        </tr>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 }
-    </tbody>
-</table>
+<h1>Courses</h1>
 
+<div class="row mb-12 g-6">
+    @foreach (var course in Model)
+    {
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                <div class="card-body">
+                    <h4>@course.Course_Name.ToUpper()</h4>
+                    <div>
+                        <hr />
+                        <dl class="row">
 
-<a asp-action="CreateCourse" class="btn btn-primary">Create Course</a>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => course.Id)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => course.Id)
+                            </dd>
+
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("Teacher")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => course.Teacher.Teacher_Name)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("Course Hours")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => course.Course_Hours)
+                            </dd>
+                            @if (course.isApproved == 0 || course.isApproved == null)
+                            {
+                                <dd>
+                                    <span class="badge bg-warning">Pending</span>
+                                </dd>
+                            }
+                            @if (course.isApproved == 1)
+                            {
+                                <dd>
+                                    <span class="badge bg-danger">Not Approved</span>
+                                </dd>
+                            }
+                            @if (course.isApproved == 2)
+                            {
+                                <dd>
+                                    <span class="badge bg-success">Approved</span>
+                                </dd>
+                            }
+                        </dl>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a asp-controller="Courses" asp-action="DeleteConfirmed" asp-route-courseId="@course.Id" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    }
+</div>

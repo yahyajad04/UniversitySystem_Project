@@ -12,45 +12,86 @@
     </div>
 }
 
-<h1>Regestered Courses</h1>
+<h1>Registered Courses</h1>
 
-<table class="table">
-    <thead>
-        <tr class="table-success">
-            <th>
-                @Html.DisplayName("Course Name")
-            </th>
-            <th>
-                @Html.DisplayName("Course Teacher")
-            </th>
-            <th>
-                @Html.DisplayName("Course Hours")
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+<form asp-action="RegesteredCourses" method="get" class="d-flex gap-2 mb-3">
+    <select name="sortField" class="form-select">
+        <option value="Course_Name">Course Name</option>
+        <option value="Id">Course ID</option>
+        <option value="Teacher_Name">Teacher Name</option>
+    </select>
 
-@foreach(var course in Model.courses)
-{
-<tr>
-    <td>
-        @Html.DisplayFor(itemCourse => course.Course_Name)
-    </td>
-    <td>
-        @Html.DisplayFor(itemCourse => course.Teacher_Name)
-    </td>
-    <td>
-        @Html.DisplayFor(itemCourse => course.Course_Hours)
-    </td>   
-    <td>
-        <form asp-action="Unroll" method="post">
-            <input type="hidden" name="courseId" value="@course.Id" />
-            <button type="submit" class="btn btn-primary">Unroll</button>
-        </form>
-    </td>
-</tr>
-}
+    <select name="sortOrder" class="form-select">
+        <option value="asc">A-Z</option>
+        <option value="desc">Z-A</option>
+    </select>
 
-    </tbody>
-</table>
+    <button type="submit" class="btn btn-primary">Sort</button>
+</form>
+<div class="row mb-12 g-6">
+    @foreach (var course in Model.courses)
+    {
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4>@course.Course_Name.ToUpper()</h4>
+                    <div>
+                        <hr />
+                        <dl class="row">
+
+                            <dt class="col-sm-5">
+                                @Html.DisplayName("Course Name")
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => course.Course_Name)
+                            </dd>
+                            <dt class="col-sm-5">
+                                @Html.DisplayName("Teacher Name")
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => course.Teacher.Teacher_Name)
+                            </dd>
+                            <dt class="col-sm-5">
+                                @Html.DisplayName("Course Hours")
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => course.Course_Hours)
+                            </dd>
+                            @foreach (var grade in Model.Grades)
+                            {
+                                if (grade.CourseId == course.Id)
+                                {
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(gradeCourse => grade.first)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(gradeCourse => grade.first)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(gradeCourse => grade.second)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(gradeCourse => grade.second)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(gradeCourse => grade.final)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(gradeCourse => grade.final)
+                                    </dd>
+                                }
+                            }
+                        </dl>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <form asp-action="Unroll" method="post">
+                            <input type="hidden" name="courseId" value="@course.Id" />
+                            <button type="submit" class="btn btn-primary">Unroll</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    }
+</div>

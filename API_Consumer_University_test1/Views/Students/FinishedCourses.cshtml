@@ -1,0 +1,91 @@
+﻿@model API_Consumer_University_test1.Models.Students
+<link rel="stylesheet" href="~/lib/bootswatch/darkly/bootstrap.css" />
+
+@{
+    ViewData["Title"] = "RegesteredCourses";
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<h1>Finished Courses</h1>
+
+<form asp-action="RegesteredCourses" method="get" class="d-flex gap-2 mb-3">
+    <select name="sortField" class="form-select">
+        <option value="Course_Name">Course Name</option>
+        <option value="Id">Course ID</option>
+        <option value="Teacher_Name">Teacher Name</option>
+    </select>
+
+    <select name="sortOrder" class="form-select">
+        <option value="asc">A-Z</option>
+        <option value="desc">Z-A</option>
+    </select>
+
+    <button type="submit" class="btn btn-primary">Sort</button>
+</form>
+<div class="row mb-12 g-6">
+    @foreach (var course in Model.courses)
+    {
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4>@course.Course_Name.ToUpper()</h4>
+                    <div>
+                        <hr />
+                        <dl class="row">
+
+                            <dt class="col-sm-5">
+                                @Html.DisplayName("Course Name")
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => course.Course_Name)
+                            </dd>
+                            <dt class="col-sm-5">
+                                @Html.DisplayName("Teacher Name")
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => course.Teacher.Teacher_Name)
+                            </dd>
+                            <dt class="col-sm-5">
+                                @Html.DisplayName("Course Hours")
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => course.Course_Hours)
+                            </dd>
+                            @foreach (var grade in Model.Grades)
+                            {
+                                if (grade.CourseId == course.Id)
+                                {
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(gradeCourse => grade.first)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(gradeCourse => grade.first)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(gradeCourse => grade.second)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(gradeCourse => grade.second)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(gradeCourse => grade.final)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(gradeCourse => grade.final)
+                                    </dd>
+                                }
+                            }
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

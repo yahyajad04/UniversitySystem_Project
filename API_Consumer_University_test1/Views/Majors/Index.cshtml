@@ -6,42 +6,47 @@
 
 <h1>Majors</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayName("Major Name")
-            </th>
-            <th>
-                @Html.DisplayName("Total Hours")
-            </th>
-            <th>
-                @Html.DisplayName("Cost/Hour")
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.major_hours)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.major_cost_hour)
-                <a>JD</a>
-            </td>
-            <td>
-                <div class="d-flex gap-2">
-                    <a asp-controller="Majors" asp-action="DeleteConfirmed" asp-route-majorId="@item.Id" class="btn btn-danger">Delete</a>
+<div class="row mb-12 g-6">
+    @foreach (var major in Model)
+    {
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4>@major.Name.ToUpper()</h4>
+                    <div>
+                        <hr />
+                        <dl class="row">
+
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => major.Id)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => major.Id)
+                            </dd>
+
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("Total Hours")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => major.major_hours)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("Cost/Hour")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => major.major_cost_hour)
+                            </dd>
+
+                        </dl>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a asp-controller="Majors" asp-action="DeleteConfirmed" asp-route-majorId="@major.Id" class="btn btn-danger">Delete</a>
+                    </div>
                 </div>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            </div>
+        </div>
+    }
+</div>
 
 <a asp-action="CreateMajor" class="btn btn-primary">Create Major</a>

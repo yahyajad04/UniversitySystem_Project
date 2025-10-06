@@ -10,6 +10,6 @@
         public int? hours_term { get; set; }
         public double? reciept { get; set; }
         public List<Coursedto> Courses { get; set; }
-
+        public ICollection<Grades> Grades { get; set; } = new List<Grades>();
     }
 }

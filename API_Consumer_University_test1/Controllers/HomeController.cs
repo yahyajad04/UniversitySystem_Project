@@ -2,6 +2,7 @@ using API_Consumer_University_test1.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
@@ -61,7 +62,31 @@ namespace API_Consumer_University_test1.Controllers
         {
             return View();
         }
-
+        [HttpGet]
+        public async Task<IActionResult> ApproveCourse()
+        {
+            List<Courses> courses = new List<Courses>();
+            HttpResponseMessage response1 = await _httpClient.GetAsync("http://localhost:5134/api/Courses");
+            if (response1.IsSuccessStatusCode)
+            {
+                string data = response1.Content.ReadAsStringAsync().Result;
+                courses = JsonConvert.DeserializeObject<List<Courses>>(data);
+            }
+            return View(courses);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ApproveCourse(int id,int isApproved)
+        {
+            Debug.WriteLine($"++ Course Id == {id}");
+            var putUrl = $"http://localhost:5134/api/Courses/{id}/isApproved?isApproved={isApproved}";
+            var putResponse = await _httpClient.PutAsync(putUrl, null);
+            if (!putResponse.IsSuccessStatusCode)
+            {
+                TempData["ErrorMessage"] = $"Failed to Edit values. Status: {putResponse.StatusCode}";
+                return RedirectToAction("Index","Courses");
+            }
+            return RedirectToAction("Index", "Courses");
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

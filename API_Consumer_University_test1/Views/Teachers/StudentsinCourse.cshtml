@@ -1,0 +1,80 @@
+﻿@model API_Consumer_University_test1.Models.Courses
+
+@{
+    ViewData["Title"] = "StudentsinCourse";
+}
+
+<h1>Students in this Course</h1>
+
+
+<div class="row mb-12 g-6">
+@foreach (var student in Model.Students)
+{
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4>@student.Name.ToUpper()</h4>
+                    <div>
+                        <hr />
+                        <dl class="row">
+                           
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => student.Email)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => student.Email)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("hours/term")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => student.hours_term)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("Major")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => student.Major.Name)
+                            </dd>
+                            @foreach (var grade in student.Grades)
+                            {
+                                if (grade.CourseId == Model.Id)
+                                {
+                                    <dt class="col-sm-4">
+                                        @Html.DisplayNameFor(gradeCourse => grade.first)
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        @Html.DisplayFor(gradeCourse => grade.first)
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        @Html.DisplayNameFor(gradeCourse => grade.second)
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        @Html.DisplayFor(gradeCourse => grade.second)
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        @Html.DisplayNameFor(gradeCourse => grade.final)
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        @Html.DisplayFor(gradeCourse => grade.final)
+                                    </dd>
+                                }
+                            }
+                        </dl>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <form asp-controller="Students" asp-action="EditGrade" method="get">
+                            <input type="hidden" name="studentId" value="@student.Id" />
+                            <input type="hidden" name="courseId" value="@Model.Id" />
+                            <button type="submit" class="btn btn-warning">Edit Grade</button>
+                        </form>
+                        <a asp-controller="Teachers" asp-action="RegisteredCourses" class="btn btn-primary">Back to Courses</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+}
+</div>
+

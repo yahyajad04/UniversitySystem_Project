@@ -1,0 +1,114 @@
+﻿@model IEnumerable<API_Consumer_University_test1.Models.Teachers>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<h1>Teachers</h1>
+
+
+@* <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Teacher_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PHD)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PHD)
+            </td>
+            <td>
+                <a asp-action="EditTeacher" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                <a asp-action="ShowProfileAdmin" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                <a asp-action="DeleteConfirmed" asp-route-teacherId="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table> *@
+
+@* 
+    <a asp-action="CreateTeacher" class="btn btn-primary">Create Teacher</a> *@
+
+<div class="row mb-12 g-6">
+    @foreach (var teacher in Model)
+    {
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4>@teacher.Teacher_Name.ToUpper()</h4>
+                    <div>
+                        <hr />
+                        <dl class="row">
+
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => teacher.Email)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => teacher.Email)
+                            </dd>
+
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("Salary")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => teacher.Salary)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("PHD")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => teacher.PHD)
+                            </dd>
+
+                        </dl>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a asp-action="EditTeacher" asp-route-id="@teacher.Id" class="btn btn-warning">Edit</a>
+                        <a asp-action="ShowProfileAdmin" asp-route-id="@teacher.Id" class="btn btn-primary">Details</a>
+                        <a asp-action="DeleteConfirmed" asp-route-teacherId="@teacher.Id" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<a asp-action="CreateTeacher" class="btn btn-primary">Create Teacher</a>

@@ -124,14 +124,22 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a asp-controller="Students" asp-action="FinishedCourses" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>Finished Courses</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a asp-controller="Students" asp-action="ShowProfile" class="nav-link">
                                         <i class="nav-icon fas fa-book"></i>
                                         <p>Profile</p>
                                     </a>
                                 </li>
+                                
                             }
                             @if (User.IsInRole("Admin"))
                             {
+                              
                                 <li class="nav-item">
                                     <a asp-controller="Students" asp-action="Index" class="nav-link">
                                         <i class="nav-icon fas fa-book"></i>
@@ -145,9 +153,42 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a asp-controller="Home" asp-action="ApproveCourse" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>Approve Courses</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a asp-controller="Courses" asp-action="Index" class="nav-link">
                                         <i class="nav-icon fas fa-book"></i>
                                         <p>Courses</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-controller="Teachers" asp-action="Index" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>Teachers</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Teacher"))
+                            {
+                                <li class="nav-item">
+                                    <a asp-controller="Teachers" asp-action="ShowProfile" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>Profile</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-controller="Teachers" asp-action="RegisteredCourses" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>Registered Courses</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-controller="Courses" asp-action="CreateCourse" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>Create Course</p>
                                     </a>
                                 </li>
                             }
@@ -168,8 +209,15 @@
 
         <!-- Footer -->
         <footer class="main-footer">
-            <strong>&copy; @DateTime.Now.Year - University - </strong>
-            <a asp-action="Privacy" asp-controller="Home">Privacy</a>
+            <div class="footer-top">
+                <a href="https://www.linkedin.com/in/yahya-jad-9227a1248/">Linked In  -</a>
+                <a href="https://github.com/yahyajad04?tab=repositories">-  GitHub</a>
+            </div>
+
+            <div class="footer-bottom">
+                <strong>&copy; @DateTime.Now.Year - University - </strong>
+                <a asp-action="Privacy" asp-controller="Home">Privacy</a>
+            </div>
         </footer>
     </div>
 

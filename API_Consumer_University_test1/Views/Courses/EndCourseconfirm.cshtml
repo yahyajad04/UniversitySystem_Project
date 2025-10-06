@@ -1,0 +1,43 @@
+﻿@model API_Consumer_University_test1.Models.Courses
+
+@{
+    ViewData["Title"] = "EndCourseconfirm";
+}
+
+<h1>EndCourseconfirm</h1>
+
+<h3>Are you sure you want to End this Course? You cant undo this Action!</h3>
+<div>
+    <h4>Courses</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Course_Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Course_Name)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Course_Hours)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Course_Hours)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.isApproved)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.isApproved)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.isDone)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.isDone)
+        </dd>
+    </dl>
+
+    <form asp-controller="Courses" asp-action="EndCourse" asp-route-courseId="@Model.Id" method="post">
+        <button type="submit" class="btn btn-danger">Finish Course</button>
+    </form>
+    <a asp-controller="Teachers" asp-action="RegisteredCourses" class="btn btn-primary">Back to List</a>
+</div>

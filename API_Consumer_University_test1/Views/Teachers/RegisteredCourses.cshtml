@@ -1,0 +1,76 @@
+﻿@model API_Consumer_University_test1.Models.Teachers
+
+@{
+    ViewData["Title"] = "RegisteredCourses";
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<h1>Registered Courses</h1>
+
+
+<div class="row mb-12 g-6">
+    @foreach (var course in Model.T_courses)
+    {
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4>@course.Course_Name.ToUpper()</h4>
+                    <div>
+                        <hr />
+                        <dl class="row">
+
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => course.Id)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => course.Id)
+                            </dd>
+
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("Teacher")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => Model.Teacher_Name)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayName("Course Hours")
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => course.Course_Hours)
+                            </dd>
+                            @if (course.isApproved == 0 || course.isApproved == null)
+                            {
+                                <dd>
+                                    <span class="badge bg-warning">Pending</span>
+                                </dd>
+                            }
+                            @if (course.isApproved == 1)
+                            {
+                                <dd>
+                                    <span class="badge bg-danger">Not Approved</span>
+                                </dd>
+                            }
+                            @if (course.isApproved == 2)
+                            {
+                                <dd>
+                                    <span class="badge bg-success">Approved</span>
+                                </dd>
+                            }
+
+                        </dl>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a asp-action="StudentsinCourse" asp-route-courseId="@course.Id" class="btn btn-primary">Registered Students</a>
+                        <a asp-controller="Courses" asp-action="EndCourseConfirm" asp-route-courseId="@course.Id" class="btn btn-primary">End Course</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
