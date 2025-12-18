@@ -82,3 +82,5 @@ Seeding: The system automatically seeds the initial Admin account on the first r
 API: Start the Web API project first.
 
 Client: Start the MVC project to begin the simulation.
+
+Here is a 5-minute demonstration video for the system in general to see how it works: https://youtu.be/O1u2xZneUsk
