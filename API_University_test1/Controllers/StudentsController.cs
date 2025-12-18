@@ -1,18 +1,20 @@
-﻿using System;
+﻿using API_University_test1.Data;
+using API_University_test1.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using API_University_test1.Data;
-using API_University_test1.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace API_University_test1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class StudentsController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -55,6 +57,7 @@ namespace API_University_test1.Controllers
                         second = g.second,
                         final = g.final,
                         total = g.total,
+                        letter_grade = g.letter_grade,
                     }  
                         ).ToList(),
                     courses = student.courses.Select(c => new Courses
@@ -108,6 +111,7 @@ namespace API_University_test1.Controllers
                         second = g.second,
                         final = g.final,
                         total = g.total,
+                        letter_grade = g.letter_grade,
                     }
                         ).ToList(),
                     courses = student.courses.Select(c => new Courses
@@ -147,6 +151,7 @@ namespace API_University_test1.Controllers
                 Major = student.Major,
                 reciept = student.reciept,
                 hours_term = student.hours_term,
+                Total_Hours = student.Total_Hours,
                 Grades = student.Grades.Select(g => new Grades
                 {
                     Id = g.Id,
@@ -156,6 +161,7 @@ namespace API_University_test1.Controllers
                     second = g.second,
                     final = g.final,
                     total = g.total,
+                    letter_grade = g.letter_grade,
                 }
                         ).ToList(),
                 Courses = student.courses.Select(c => new Coursedto
@@ -192,7 +198,8 @@ namespace API_University_test1.Controllers
                 grade.first,
                 grade.second,
                 grade.final,
-                grade.total
+                grade.total,
+                grade.letter_grade
             });
         }
 
@@ -325,29 +332,47 @@ namespace API_University_test1.Controllers
         public async Task<IActionResult> PutStudentsGrade(int studentId,int courseId,int first, int second, int final)
         {
             var grade = await _context.Grades.FirstOrDefaultAsync(g => g.StudentId == studentId && g.CourseId == courseId);
-            if (grade == null)
+            var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId);
+            if (grade == null || course == null)
             {
                 return NotFound();
             }
+
             grade.first = first;
             grade.second = second;
             grade.final = final;
             grade.total = first + second + final;
+
+            if (course.isDone == 1)
+            {
+                if (grade.total >= 85) { grade.letter_grade = "A"; }
+                else if (grade.total >= 77) { grade.letter_grade = "A-"; }
+                else if (grade.total >= 72) { grade.letter_grade = "B+"; }
+                else if (grade.total >= 65) { grade.letter_grade = "B"; }
+                else if (grade.total >= 60) { grade.letter_grade = "B-"; }
+                else if (grade.total >= 56) { grade.letter_grade = "C+"; }
+                else if (grade.total >= 52) { grade.letter_grade = "C"; }
+                else if (grade.total >= 48) { grade.letter_grade = "C-"; }
+                else if (grade.total >= 45) { grade.letter_grade = "D+"; }
+                else if (grade.total >= 41) { grade.letter_grade = "D"; }
+                else if (grade.total >= 36) { grade.letter_grade = "D-"; }
+                else if (grade.total < 36) { grade.letter_grade = "F"; }
+            }
             try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Grades.Any(g => g.Id == grade.Id))
                 {
-                    return NotFound();
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!_context.Grades.Any(g => g.Id == grade.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
 
             return NoContent();
         }
@@ -392,7 +417,8 @@ namespace API_University_test1.Controllers
                 first = 0,
                 second = 0,
                 final = 0,
-                total = 0
+                total = 0,
+                letter_grade = null
             };
             _context.Grades.Add(grade);
             await _context.SaveChangesAsync();

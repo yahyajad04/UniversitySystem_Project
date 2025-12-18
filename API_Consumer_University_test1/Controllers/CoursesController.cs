@@ -2,16 +2,21 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
+using static System.Net.WebRequestMethods;
 
 namespace API_Consumer_University_test1.Controllers
 {
     public class CoursesController : Controller
     {
+        private static string _token;
         Uri address_Courses = new Uri("http://localhost:5134/api/Courses");
         private readonly HttpClient _httpClient;
         private readonly UserManager<IdentityUser> _userManager;
@@ -21,8 +26,25 @@ namespace API_Consumer_University_test1.Controllers
             _httpClient.BaseAddress = address_Courses;
             _userManager = userManager;
         }
-        public IActionResult Index()
+
+        private async Task LoginAsync()
         {
+            var loginData = new { userName = "admin", password = "Password" };
+            var content = new StringContent(JsonConvert.SerializeObject(loginData), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync($"http://localhost:5134/api/APILogin", content);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Login failed: " + result);
+
+            dynamic obj = JsonConvert.DeserializeObject(result);
+            _token = obj.token;
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+        }
+        public async Task<IActionResult> Index(string sortField = "Course_Name", string sortOrder = "asc")
+        {
+            await LoginAsync();
             List<Courses> courses = new List<Courses>();
             HttpResponseMessage response = _httpClient.GetAsync(address_Courses).Result;
             if (response.IsSuccessStatusCode)
@@ -30,18 +52,46 @@ namespace API_Consumer_University_test1.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 courses = JsonConvert.DeserializeObject<List<Courses>>(data);
             }
+            switch (sortField)
+            {
+                case "Course_Name":
+                    courses = sortOrder == "desc"
+                        ? courses.OrderByDescending(c => c.Course_Name).ToList()
+                        : courses.OrderBy(c => c.Course_Name).ToList();
+                    break;
+
+                case "Id":
+                    courses = sortOrder == "desc"
+                        ? courses.OrderByDescending(c => c.Id).ToList()
+                        : courses.OrderBy(c => c.Id).ToList();
+                    break;
+            }
             return View(courses);
         }
         [HttpGet]
         [Authorize(Roles = "Teacher")]
-        public IActionResult CreateCourse()
+        public async Task<IActionResult> CreateCourse()
         {
+            await LoginAsync();
+            List<Majors> Majors = new List<Majors>();
+            HttpResponseMessage response2Majors = await _httpClient.GetAsync("http://localhost:5134/api/Majors");
+            if (response2Majors.IsSuccessStatusCode)
+            {
+                string data4 = await response2Majors.Content.ReadAsStringAsync();
+                Majors = JsonConvert.DeserializeObject<List<Majors>>(data4);
+            }
+            else
+            {
+                Console.WriteLine("FAILED MAJORS API");
+            }
+            ViewBag.Majors = Majors;
             return View();
         }
         [HttpPost]
         [Authorize(Roles ="Teacher")]
-        public async Task<IActionResult> CreateCourse(Courses course/*, int teacherId*/)
+        public async Task<IActionResult> CreateCourse(Courses course, List<int> majors)
         {
+            await LoginAsync();
             if (!ModelState.IsValid)
             {
                 TempData["error"] = "Creation Failed: Model is invalid";
@@ -63,13 +113,26 @@ namespace API_Consumer_University_test1.Controllers
                     teacherId = teacher.Id;
                 }
             }
+            List<Majors> Majors = new List<Majors>();
+            HttpResponseMessage response2Majors = await _httpClient.GetAsync("http://localhost:5134/api/Majors");
+            if (response2Majors.IsSuccessStatusCode)
+            {
+                string data4 = await response2Majors.Content.ReadAsStringAsync();
+                Majors = JsonConvert.DeserializeObject<List<Majors>>(data4);
+            }
+            else
+            {
+                Console.WriteLine("FAILED MAJORS API");
+            }
+            ViewBag.Majors = Majors;
+           
             var courseforAPI = new
             {
                 course.Course_Name,
                 course.Description,
                 TeacherId = teacherId,
                 course.Course_Hours,
-                
+                MajorsId = majors,
             };
             var json = JsonConvert.SerializeObject(courseforAPI);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -81,12 +144,13 @@ namespace API_Consumer_University_test1.Controllers
                 return View(course);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("RegisteredCourses", "Teachers");
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCourse(int courseId)
         {
+            await LoginAsync();
             if (!ModelState.IsValid)
                 return RedirectToAction("Index");
 
@@ -126,6 +190,7 @@ namespace API_Consumer_University_test1.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteConfirmed(int courseId)
         {
+            await LoginAsync();
             List<Courses> courses = new List<Courses>();
             HttpResponseMessage response = _httpClient.GetAsync(address_Courses).Result;
             if (response.IsSuccessStatusCode)
@@ -146,6 +211,7 @@ namespace API_Consumer_University_test1.Controllers
         [HttpPost]
         public async Task<IActionResult> EndCourse(int courseId)
         {
+            await LoginAsync();
             var putUrl = $"http://localhost:5134/api/Courses/{courseId}/isDone";
             var putResponse = await _httpClient.PutAsync(putUrl, null);
             if (!putResponse.IsSuccessStatusCode)
@@ -156,6 +222,7 @@ namespace API_Consumer_University_test1.Controllers
         }
         public async Task<IActionResult> EndCourseConfirm(int courseId)
         {
+            await LoginAsync();
             Courses course = new Courses();
             HttpResponseMessage response = _httpClient.GetAsync($"{address_Courses}/{courseId}").Result;
             if (response.IsSuccessStatusCode)
@@ -164,6 +231,33 @@ namespace API_Consumer_University_test1.Controllers
                 course = JsonConvert.DeserializeObject<Courses>(data);
             }
             return View(course);
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditCourse(int courseId)
+        {
+            await LoginAsync();
+            Courses course = new Courses();
+            HttpResponseMessage response = await _httpClient.GetAsync($"{address_Courses}/{courseId}");
+            if (response.IsSuccessStatusCode)
+            {
+                string data4 = await response.Content.ReadAsStringAsync();
+                course = JsonConvert.DeserializeObject<Courses>(data4);
+            }
+            return View(course);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditCourse(int courseId, string Course_Name, string Description)
+        {
+            await LoginAsync();
+            var putUrl = $"http://localhost:5134/api/Courses/{courseId}?CName={Course_Name}&Description={Description}";
+            var putResponse = await _httpClient.PutAsync(putUrl, null);
+            if (!putResponse.IsSuccessStatusCode)
+            {
+                TempData["ErrorMessage"] = "Failed to Edit values.";
+            }
+            Debug.WriteLine($"++ Course Id == {courseId}");
+            Debug.WriteLine($"++ Course Name == {Course_Name}");
+            return RedirectToAction("Index");
         }
     }
 }

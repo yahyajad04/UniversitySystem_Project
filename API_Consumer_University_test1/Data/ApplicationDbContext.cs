@@ -10,6 +10,7 @@ namespace API_Consumer_University_test1.Data
             : base(options)
         {
         }
+        public DbSet<API_Consumer_University_test1.Models.Courses> Courses { get; set; } = default!;
 
     }
 }

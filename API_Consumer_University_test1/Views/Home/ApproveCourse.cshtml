@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    int count = 0;
 }
 @if (TempData["ErrorMessage"] != null)
 {
@@ -10,13 +11,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
-<h1>Course Reguests</h1>
+<h1>Course Requests</h1>
 
 <div class="row mb-12 g-6">
     @foreach (var course in Model)
     {
         if (course.isApproved == 0)
         {
+            count++;
             <div class="col-md-6 col-lg-4">
                 <div class="card">
                 <div class="card-body">
@@ -64,6 +66,10 @@
             </div>
         </div>
         }
+    }
+    @if(count == 0)
+    {
+        <h3>Nothing to Approve yet.</h3>
     }
 </div>
 

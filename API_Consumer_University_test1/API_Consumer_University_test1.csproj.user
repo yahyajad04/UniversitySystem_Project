@@ -13,7 +13,6 @@
     <WebStackScaffolding_DbContextTypeFullName>API_Consumer_University_test1.Data.ApplicationDbContext</WebStackScaffolding_DbContextTypeFullName>
     <_SelectedScaffolderID>IdentityScaffolder</_SelectedScaffolderID>
     <_SelectedScaffolderCategoryPath>root/Identity</_SelectedScaffolderCategoryPath>
-    <WebStackScaffolding_LayoutPageFile />
     <NameOfLastUsedPublishProfile>C:\Users\ASUS\Desktop\web-projects-course\API_Consumer_University_test1\Properties\PublishProfiles\university-mvc - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

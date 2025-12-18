@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace API_Consumer_University_test1.Controllers
 {
     public class MajorsController : Controller
     {
+        private static string _token;
         Uri address_Majors = new Uri("http://localhost:5134/api/Majors");
         private readonly HttpClient _httpClient;
         public MajorsController()
@@ -17,8 +19,24 @@ namespace API_Consumer_University_test1.Controllers
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = address_Majors;
         }
-        public IActionResult Index()
+        private async Task LoginAsync()
         {
+            var loginData = new { userName = "admin", password = "Password" };
+            var content = new StringContent(JsonConvert.SerializeObject(loginData), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync($"http://localhost:5134/api/APILogin", content);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Login failed: " + result);
+
+            dynamic obj = JsonConvert.DeserializeObject(result);
+            _token = obj.token;
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+        }
+        public async Task<IActionResult> Index()
+        {
+            await LoginAsync();
             List<Majors> majors = new List<Majors>();
             HttpResponseMessage response = _httpClient.GetAsync(address_Majors).Result;
             if (response.IsSuccessStatusCode)
@@ -35,6 +53,7 @@ namespace API_Consumer_University_test1.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMajor(Majors major)
         {
+            await LoginAsync();
             if (!ModelState.IsValid)
             {
                 TempData["error"] = "Creation Failed";
@@ -74,6 +93,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteMajor(int majorId)
         {
+            await LoginAsync();
             if (!ModelState.IsValid)
                 return RedirectToAction("Index");
 
@@ -104,6 +124,7 @@ namespace API_Consumer_University_test1.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteConfirmed(int majorId)
         {
+            await LoginAsync();
             List<Majors> majors = new List<Majors>();
             HttpResponseMessage response = _httpClient.GetAsync(address_Majors).Result;
             if (response.IsSuccessStatusCode)

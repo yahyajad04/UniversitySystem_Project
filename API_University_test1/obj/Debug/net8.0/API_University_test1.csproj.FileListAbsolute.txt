@@ -286,3 +286,4 @@ C:\Users\ASUS\Desktop\web-projects-course\API_University_test1\bin\Debug\net8.0\
 C:\Users\ASUS\Desktop\web-projects-course\API_University_test1\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\ASUS\Desktop\web-projects-course\API_University_test1\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
 C:\Users\ASUS\Desktop\web-projects-course\API_University_test1\obj\Debug\net8.0\API_University_test1.sourcelink.json
+C:\Users\ASUS\Desktop\web-projects-course\API_University_test1\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -74,6 +74,9 @@ namespace API_University_test1.Migrations
                     b.Property<double>("first")
                         .HasColumnType("float");
 
+                    b.Property<string>("letter_grade")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("second")
                         .HasColumnType("float");
 
@@ -184,6 +187,21 @@ namespace API_University_test1.Migrations
                     b.ToTable("Teachers");
                 });
 
+            modelBuilder.Entity("CoursesMajors", b =>
+                {
+                    b.Property<int>("CoursesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MajorsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CoursesId", "MajorsId");
+
+                    b.HasIndex("MajorsId");
+
+                    b.ToTable("CoursesMajors");
+                });
+
             modelBuilder.Entity("CoursesStudents", b =>
                 {
                     b.Property<int>("StudentsId")
@@ -234,6 +252,21 @@ namespace API_University_test1.Migrations
                         .HasForeignKey("MajorsId");
 
                     b.Navigation("Major");
+                });
+
+            modelBuilder.Entity("CoursesMajors", b =>
+                {
+                    b.HasOne("API_University_test1.Models.Courses", null)
+                        .WithMany()
+                        .HasForeignKey("CoursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API_University_test1.Models.Majors", null)
+                        .WithMany()
+                        .HasForeignKey("MajorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CoursesStudents", b =>

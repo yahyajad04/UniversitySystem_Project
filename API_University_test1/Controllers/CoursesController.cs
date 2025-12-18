@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_University_test1.Data;
 using API_University_test1.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_University_test1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CoursesController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -27,6 +29,7 @@ namespace API_University_test1.Controllers
         {
             var courses = await _context.Courses
                 .Include(t => t.Teacher)
+                .Include(m => m.Majors)
                 .Include(s => s.Students)
                 .ThenInclude(s => s.Major)
                 .ToListAsync();
@@ -49,6 +52,8 @@ namespace API_University_test1.Controllers
                     Course_Hours = course.Course_Hours,
                     isApproved = course.isApproved,
                     isDone = course.isDone,
+                    Majors = course.Majors,
+                    Description = course.Description,
                     Students = course.Students.Select(c => new Studentdto
                     {
                         Id = c.Id,
@@ -80,6 +85,7 @@ namespace API_University_test1.Controllers
             {
                 var course = await _context.Courses
                     .Include(t => t.Teacher)
+                    .Include(m => m.Majors)
                     .Include(s => s.Students)
                     .ThenInclude(g => g.Grades)
                     .Include(s => s.Students)
@@ -102,6 +108,8 @@ namespace API_University_test1.Controllers
                     Course_Hours = course.Course_Hours,
                     isApproved = course.isApproved,
                     isDone = course.isDone,
+                    Majors = course.Majors,
+                    Description = course.Description,
                     Students = course.Students.Select(c => new Studentdto
                     {
                         Id = c.Id,
@@ -130,14 +138,16 @@ namespace API_University_test1.Controllers
         // PUT: api/Courses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCourses(int id, Courses courses)
+        public async Task<IActionResult> PutCourses(int id, string CName, string Description)
         {
-            if (id != courses.Id)
+            var course = _context.Courses.FirstOrDefault(c => c.Id == id);
+            if (course == null)
             {
                 return BadRequest();
             }
 
-                _context.Entry(courses).State = EntityState.Modified;
+            course.Course_Name = CName;
+            course.Description = Description;
             try
             {
                 await _context.SaveChangesAsync();
@@ -203,6 +213,24 @@ namespace API_University_test1.Controllers
 
             if (course.isDone == 0 || course.isDone == null) {
                 course.isDone = 1;
+                var grades = await _context.Grades
+                            .Where(g => g.CourseId == course.Id)
+                            .ToListAsync();
+                foreach (var grade in grades)
+                {
+                    if (grade.total >= 85) { grade.letter_grade = "A"; }
+                    else if (grade.total >= 77) { grade.letter_grade = "A-"; }
+                    else if (grade.total >= 72) { grade.letter_grade = "B+"; }
+                    else if (grade.total >= 65) { grade.letter_grade = "B"; }
+                    else if (grade.total >= 60) { grade.letter_grade = "B-"; }
+                    else if (grade.total >= 56) { grade.letter_grade = "C+"; }
+                    else if (grade.total >= 52) { grade.letter_grade = "C"; }
+                    else if (grade.total >= 48) { grade.letter_grade = "C-"; }
+                    else if (grade.total >= 45) { grade.letter_grade = "D+"; }
+                    else if (grade.total >= 41) { grade.letter_grade = "D"; }
+                    else if (grade.total >= 36) { grade.letter_grade = "D-"; }
+                    else if (grade.total < 36) { grade.letter_grade = "F"; }
+                }
                 course.Teacher.T_courses.Remove(course);
                 foreach (var student in course.Students)
                 {
@@ -238,6 +266,13 @@ namespace API_University_test1.Controllers
         {
             courses.isDone = 0;
             courses.isApproved = 0;
+            if (courses.MajorsId != null)
+            {
+                foreach (var mid in courses.MajorsId)
+                {
+                    courses.Majors.Add(await _context.Majors.FirstOrDefaultAsync(m => m.Id == mid));
+                }
+            }
             _context.Courses.Add(courses);
             await _context.SaveChangesAsync();
 

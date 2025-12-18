@@ -29,7 +29,7 @@
 <div class="row mb-12 g-6">
     @foreach (var course in Model)
     {
-        if (course.isApproved == 2)
+        if (course.isApproved == 2 && course.isDone == 0)
         {
             <div class="col-md-6 col-lg-4">
                 <div class="card">

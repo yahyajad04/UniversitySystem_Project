@@ -7,8 +7,10 @@ using Microsoft.Data.SqlClient;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NuGet.Common;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -17,10 +19,10 @@ namespace API_Consumer_University_test1.Controllers
     [Authorize]
     public class StudentsController : Controller
     {
+        private static string _token;
         Uri address_GetStudents = new Uri("http://localhost:5134/api/Students");
         private readonly HttpClient _httpClient;
         private readonly UserManager<IdentityUser> _userManager;
-
 
         public StudentsController(UserManager<IdentityUser> userManager)
         {
@@ -28,9 +30,26 @@ namespace API_Consumer_University_test1.Controllers
             _httpClient.BaseAddress = address_GetStudents;
             _userManager = userManager;
         }
+        [HttpPost]
+        private async Task LoginAsync()
+        {
+            var loginData = new { userName = "admin", password = "Password" };
+            var content = new StringContent(JsonConvert.SerializeObject(loginData), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync($"http://localhost:5134/api/APILogin", content);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Login failed: " + result);
+
+            dynamic obj = JsonConvert.DeserializeObject(result);
+            _token = obj.token;
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+        }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            await LoginAsync();
             List<Students> student = new List<Students>();
             HttpResponseMessage response = await _httpClient.GetAsync(address_GetStudents);
             if (response.IsSuccessStatusCode)
@@ -44,6 +63,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ShowProfileAdmin(int id)
         {
+            await LoginAsync();
             List<Students> students = new List<Students>();
             HttpResponseMessage response = await _httpClient.GetAsync(address_GetStudents);
             if (response.IsSuccessStatusCode)
@@ -66,6 +86,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Student")]
         public async Task<IActionResult> ShowProfile()
         {
+            await LoginAsync();
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -94,6 +115,29 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Student")]
         public async Task<IActionResult> Enroll(string sortField = "Course_Name", string sortOrder = "asc")
         {
+            await LoginAsync();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                TempData["ErrorMessage"] = "Failed to get the User Logged In";
+                return RedirectToAction("Index", "Home");
+            }
+            var UserId = user.Id;
+            Students s_now = null;
+            List<Students> students = new List<Students>();
+            HttpResponseMessage response2 = await _httpClient.GetAsync(address_GetStudents);
+            if (response2.IsSuccessStatusCode)
+            {
+                string data = await response2.Content.ReadAsStringAsync();
+                students = JsonConvert.DeserializeObject<List<Students>>(data);
+            }
+            foreach (var student in students)
+            {
+                if (student.UserId == UserId)
+                {
+                    s_now = student;
+                }
+            }
             List<Courses> course = new List<Courses>();
             HttpResponseMessage response = await _httpClient.GetAsync("http://localhost:5134/api/Courses");
             if (response.IsSuccessStatusCode)
@@ -101,44 +145,50 @@ namespace API_Consumer_University_test1.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 course = JsonConvert.DeserializeObject<List<Courses>>(data);
             }
+            List<Courses> final_courses = new List<Courses>();
             if (course != null)
             {
-
                 foreach (var course1 in course)
                 {
                     if (course1.isDone == null)
                     {
                         course1.isDone = 0;
                     }
+                    if (course1.Majors.Any(m => m.Id == s_now.Major.Id))
+                    {
+                        final_courses.Add(course1);
+                    }
+
                 }
                 course.RemoveAll(c => c.isDone > 0);
                 switch (sortField)
                 {
                     case "Course_Name":
-                        course = sortOrder == "desc"
-                            ? course.OrderByDescending(c => c.Course_Name).ToList()
-                            : course.OrderBy(c => c.Course_Name).ToList();
+                        final_courses = sortOrder == "desc"
+                            ? final_courses.OrderByDescending(c => c.Course_Name).ToList()
+                            : final_courses.OrderBy(c => c.Course_Name).ToList();
                         break;
 
                     case "Id":
-                        course = sortOrder == "desc"
-                            ? course.OrderByDescending(c => c.Id).ToList()
-                            : course.OrderBy(c => c.Id).ToList();
+                        final_courses = sortOrder == "desc"
+                            ? final_courses.OrderByDescending(c => c.Id).ToList()
+                            : final_courses.OrderBy(c => c.Id).ToList();
                         break;
 
                     case "Teacher_Name":
-                        course = sortOrder == "desc"
-                            ? course.OrderByDescending(c => c.Teacher.Teacher_Name).ToList()
-                            : course.OrderBy(c => c.Teacher.Teacher_Name).ToList();
+                        final_courses = sortOrder == "desc"
+                            ? final_courses.OrderByDescending(c => c.Teacher.Teacher_Name).ToList()
+                            : final_courses.OrderBy(c => c.Teacher.Teacher_Name).ToList();
                         break;
                 }
             }
-            return View(course);
+            return View(final_courses);
         }
         [HttpPost]
         [Authorize(Roles = "Student")]
         public async Task<IActionResult> EnrollCourse(int courseId)
         {
+            await LoginAsync();
             List<Courses> courses = new List<Courses>();
             HttpResponseMessage response2 = await _httpClient.GetAsync("http://localhost:5134/api/Courses");
             if (response2.IsSuccessStatusCode)
@@ -200,6 +250,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Student")]
         public async Task<IActionResult> Unroll(int courseId)
         {
+            await LoginAsync();
             List<Courses> courses = new List<Courses>();
             HttpResponseMessage response2 = _httpClient.GetAsync("http://localhost:5134/api/Courses").Result;
             if (response2.IsSuccessStatusCode)
@@ -253,6 +304,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateStudent()
         {
+            await LoginAsync();
             List<Majors> majors = new List<Majors>();
             HttpResponseMessage response = await _httpClient.GetAsync("http://localhost:5134/api/Majors");
             if (response.IsSuccessStatusCode)
@@ -268,6 +320,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateStudent(Students student)
         {
+            await LoginAsync();
             if (!ModelState.IsValid)
             {
                 TempData["error"] = "Creation Failed";
@@ -341,6 +394,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteStudent(int studentId, string Email)
         {
+            await LoginAsync();
             if (!ModelState.IsValid)
                 return RedirectToAction("Index");
 
@@ -378,6 +432,7 @@ namespace API_Consumer_University_test1.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteConfirmed(int studentId)
         {
+            await LoginAsync();
             List<Students> students = new List<Students>();
             HttpResponseMessage response = _httpClient.GetAsync(address_GetStudents).Result;
             if (response.IsSuccessStatusCode)
@@ -396,39 +451,11 @@ namespace API_Consumer_University_test1.Controllers
             return RedirectToAction("Index");
         }
 
-        //[HttpGet]
-        //[Authorize(Roles = "Student")]
-        //public async Task<IActionResult> RegesteredCourses()
-        //{
-        //    var UserId = _userManager.GetUserId(User);
-        //    if (UserId == null)
-        //        return RedirectToAction("Index");
-
-        //    List<Students> students = new List<Students>();
-        //    HttpResponseMessage response = _httpClient.GetAsync(address_GetStudents).Result;
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        string data = response.Content.ReadAsStringAsync().Result;
-        //        students = JsonConvert.DeserializeObject<List<Students>>(data);
-        //    }
-
-        //    foreach (var student in students)
-        //    {
-        //        if (student.UserId == UserId)
-        //        {
-        //            foreach (var course in student.courses) {
-        //                Debug.WriteLine(course.TeacherId + " The name is " + course.Teacher.Teacher_Name + " " + course.Teacher.Email);
-        //            }
-
-        //            return View(student);
-        //        }
-        //    }
-        //    return RedirectToAction("Index");
-        //}
         [HttpGet]
         [Authorize(Roles = "Student")]
         public async Task<IActionResult> RegesteredCourses(string sortField = "Course_Name", string sortOrder = "asc")
         {
+            await LoginAsync();
             var userId = _userManager.GetUserId(User);
             if (userId == null)
                 return RedirectToAction("Index");
@@ -485,6 +512,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditStudentAdmin(int id)
         {
+            await LoginAsync();
             var student = await _httpClient.GetFromJsonAsync<Students>($"http://localhost:5134/api/Students/{id}");
 
             if (student == null)
@@ -498,6 +526,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditStudentAdmin(int id, string name, string email, int hours_term, double reciept)
         {
+            await LoginAsync();
             var student = await _httpClient.GetFromJsonAsync<Students>($"http://localhost:5134/api/Students/{id}");
 
             if (student == null)
@@ -535,6 +564,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Student")]
         public async Task<IActionResult> EditStudent(int id)
         {
+            await LoginAsync();
             var student = await _httpClient.GetFromJsonAsync<Students>($"http://localhost:5134/api/Students/{id}");
 
             if (student == null)
@@ -548,6 +578,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Student")]
         public async Task<IActionResult> EditStudent(int id, string name, string email, string Phone)
         {
+            await LoginAsync();
             var student = await _httpClient.GetFromJsonAsync<Students>($"http://localhost:5134/api/Students/{id}");
 
             if (student == null)
@@ -586,6 +617,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> EditGrade(int studentId, int courseId)
         {
+            await LoginAsync();
             var studentGrade = await _httpClient.GetFromJsonAsync<Grades>($"http://localhost:5134/api/Students/{studentId}/{courseId}/GetGrade");
 
             if (studentGrade == null)
@@ -600,6 +632,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> EditGrade(int studentId, int courseId, int first, int second, int final)
         {
+            await LoginAsync();
             Students student = new Students();
             HttpResponseMessage response = _httpClient.GetAsync($"{address_GetStudents}/{studentId}").Result;
             if (response.IsSuccessStatusCode)
@@ -633,6 +666,7 @@ namespace API_Consumer_University_test1.Controllers
         [HttpGet]
         public async Task<IActionResult> FinishedCourses(string sortField="Course_Name",string sortOrder="asc")
         {
+            await LoginAsync();
             var userId = _userManager.GetUserId(User);
             if (userId == null)
                 return RedirectToAction("Index");

@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace API_Consumer_University_test1.Controllers
@@ -12,6 +14,7 @@ namespace API_Consumer_University_test1.Controllers
     [Authorize]
     public class TeachersController : Controller
     {
+        private static string _token;
         Uri address_GetTeachers = new Uri("http://localhost:5134/api/Teachers");
         private readonly HttpClient _httpClient;
         private readonly UserManager<IdentityUser> _userManager;
@@ -22,10 +25,27 @@ namespace API_Consumer_University_test1.Controllers
             _httpClient.BaseAddress = address_GetTeachers;
             _userManager = userManager;
         }
+        [HttpPost]
+        private async Task LoginAsync()
+        {
+            var loginData = new { userName = "admin", password = "Password" };
+            var content = new StringContent(JsonConvert.SerializeObject(loginData), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync($"http://localhost:5134/api/APILogin", content);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Login failed: " + result);
+
+            dynamic obj = JsonConvert.DeserializeObject(result);
+            _token = obj.token;
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+        }
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortField = "Teacher_Name", string sortOrder = "asc")
         {
+            await LoginAsync();
             List<Teachers> teacher = new List<Teachers>();
             HttpResponseMessage response = await _httpClient.GetAsync(address_GetTeachers);
             if (response.IsSuccessStatusCode)
@@ -33,12 +53,27 @@ namespace API_Consumer_University_test1.Controllers
                 string data = await response.Content.ReadAsStringAsync();
                 teacher = JsonConvert.DeserializeObject<List<Teachers>>(data);
             }
+            switch (sortField)
+            {
+                case "Teacher_Name":
+                    teacher = sortOrder == "desc"
+                        ? teacher.OrderByDescending(t => t.Teacher_Name).ToList()
+                        : teacher.OrderBy(t => t.Teacher_Name).ToList();
+                    break;
+
+                case "Id":
+                    teacher = sortOrder == "desc"
+                        ? teacher.OrderByDescending(t => t.Id).ToList()
+                        : teacher.OrderBy(t => t.Id).ToList();
+                    break;
+            }
             return View(teacher);
         }
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ShowProfileAdmin(int id)
         {
+            await LoginAsync();
             var teacher = new Teachers();
             HttpResponseMessage response = await _httpClient.GetAsync($"{address_GetTeachers}/{id}");
             if (response.IsSuccessStatusCode)
@@ -54,6 +89,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> ShowProfile()
         {
+            await LoginAsync();
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -89,6 +125,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateTeacher(Teachers teacher)
         {
+            await LoginAsync();
             if (!ModelState.IsValid)
             {
                 TempData["error"] = "Creation Failed: Model is invalid";
@@ -150,6 +187,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteTeacher(int teacherId, string Email)
         {
+            await LoginAsync();
             if (!ModelState.IsValid)
             {
                 TempData["ErrorMessage"] = "Failed to delete; Model Failed.";
@@ -192,6 +230,7 @@ namespace API_Consumer_University_test1.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteConfirmed(int teacherId)
         {
+            await LoginAsync();
             List<Teachers> teachers = new List<Teachers>();
             HttpResponseMessage response = _httpClient.GetAsync(address_GetTeachers).Result;
             if (response.IsSuccessStatusCode)
@@ -213,6 +252,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditTeacher(int id)
         {
+            await LoginAsync();
             var teacher = await _httpClient.GetFromJsonAsync<Teachers>($"http://localhost:5134/api/Teachers/{id}");
 
             if (teacher == null)
@@ -226,6 +266,7 @@ namespace API_Consumer_University_test1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditTeacher(int id, string phone, string email,int salary)
         {
+            await LoginAsync();
             var teacher = await _httpClient.GetFromJsonAsync<Teachers>($"http://localhost:5134/api/Teachers/{id}");
 
             if (teacher == null)
@@ -262,6 +303,7 @@ namespace API_Consumer_University_test1.Controllers
         [HttpGet]
         public async Task<IActionResult> RegisteredCourses()
         {
+            await LoginAsync();
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -289,6 +331,7 @@ namespace API_Consumer_University_test1.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveCourse(int teacherId, int courseId)
         {
+            await LoginAsync();
             var teacher = new Teachers();
             HttpResponseMessage response = await _httpClient.GetAsync($"{address_GetTeachers}/{teacherId}");
             if (response.IsSuccessStatusCode)
@@ -307,6 +350,7 @@ namespace API_Consumer_University_test1.Controllers
         [HttpGet]
         public async Task<IActionResult> StudentsinCourse(int courseId)
         {
+            await LoginAsync();
             Courses course = new Courses();
             HttpResponseMessage response = await _httpClient.GetAsync($"http://localhost:5134/api/Courses/{courseId}");
             if (response.IsSuccessStatusCode)

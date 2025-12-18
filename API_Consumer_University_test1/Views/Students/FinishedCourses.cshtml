@@ -47,12 +47,6 @@
                                 @Html.DisplayFor(model => course.Course_Name)
                             </dd>
                             <dt class="col-sm-5">
-                                @Html.DisplayName("Teacher Name")
-                            </dt>
-                            <dd class="col-sm-7">
-                                @Html.DisplayFor(model => course.Teacher.Teacher_Name)
-                            </dd>
-                            <dt class="col-sm-5">
                                 @Html.DisplayName("Course Hours")
                             </dt>
                             <dd class="col-sm-7">
@@ -79,6 +73,18 @@
                                     </dt>
                                     <dd class="col-sm-7">
                                         @Html.DisplayFor(gradeCourse => grade.final)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(gradeCourse => grade.total)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(gradeCourse => grade.total)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayName("letter grade")
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(gradeCourse => grade.letter_grade)
                                     </dd>
                                 }
                             }

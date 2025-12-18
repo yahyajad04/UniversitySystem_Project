@@ -12,6 +12,19 @@
 }
 <h1>Courses</h1>
 
+<form asp-controller="Courses" asp-action="Index" method="get" class="d-flex gap-2 mb-3">
+    <select name="sortField" class="form-select">
+        <option value="Course_Name">Course Name</option>
+        <option value="Id">Course ID</option>
+    </select>
+
+    <select name="sortOrder" class="form-select">
+        <option value="asc">A-Z</option>
+        <option value="desc">Z-A</option>
+    </select>
+
+    <button type="submit" class="btn btn-primary">Sort</button>
+</form>
 <div class="row mb-12 g-6">
     @foreach (var course in Model)
     {
@@ -53,6 +66,9 @@
                                 <dd>
                                     <span class="badge bg-danger">Not Approved</span>
                                 </dd>
+                                <dd>
+                                    <span class="badge bg-warning">Cancelled</span>
+                                </dd>
                             }
                             @if (course.isApproved == 2)
                             {
@@ -60,10 +76,23 @@
                                     <span class="badge bg-success">Approved</span>
                                 </dd>
                             }
+                            @if (course.isDone == 1)
+                            {
+                                <dd>
+                                    <span class="badge bg-danger">Finished</span>
+                                </dd>
+                            }
+                            @if (course.isDone == 0 && course.isApproved == 2)
+                            {
+                                <dd>
+                                    <span class="badge bg-warning">inProgress</span>
+                                </dd>
+                            }
                         </dl>
                     </div>
                     <div class="d-flex gap-2">
                         <a asp-controller="Courses" asp-action="DeleteConfirmed" asp-route-courseId="@course.Id" class="btn btn-danger">Delete</a>
+                        <a asp-controller="Courses" asp-action="EditCourse" asp-route-courseId="@course.Id" class="btn btn-warning">Edit</a>
                     </div>
                 </div>
             </div>

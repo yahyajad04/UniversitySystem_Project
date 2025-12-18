@@ -17,10 +17,205 @@ namespace API_Consumer_University_test1.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.18")
+                .HasAnnotation("ProductVersion", "8.0.22")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("API_Consumer_University_test1.Models.Courses", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("Course_Hours")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Course_Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("isApproved")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("isDone")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("API_Consumer_University_test1.Models.Grades", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("final")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("first")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("second")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("total")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Grades");
+                });
+
+            modelBuilder.Entity("API_Consumer_University_test1.Models.Majors", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("major_cost_hour")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("major_hours")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Majors");
+                });
+
+            modelBuilder.Entity("API_Consumer_University_test1.Models.Students", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("MajorsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Total_Hours")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("hours_term")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("reciept")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MajorsId");
+
+                    b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("API_Consumer_University_test1.Models.Teachers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PHD")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PHD_University")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Salary")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Teacher_Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("CoursesMajors", b =>
+                {
+                    b.Property<int>("CoursesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MajorsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CoursesId", "MajorsId");
+
+                    b.HasIndex("MajorsId");
+
+                    b.ToTable("CoursesMajors");
+                });
+
+            modelBuilder.Entity("CoursesStudents", b =>
+                {
+                    b.Property<int>("StudentsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("coursesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentsId", "coursesId");
+
+                    b.HasIndex("coursesId");
+
+                    b.ToTable("CoursesStudents");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -224,6 +419,69 @@ namespace API_Consumer_University_test1.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("API_Consumer_University_test1.Models.Courses", b =>
+                {
+                    b.HasOne("API_Consumer_University_test1.Models.Teachers", "Teacher")
+                        .WithMany("T_courses")
+                        .HasForeignKey("TeacherId");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("API_Consumer_University_test1.Models.Grades", b =>
+                {
+                    b.HasOne("API_Consumer_University_test1.Models.Courses", "Course")
+                        .WithMany("Grades")
+                        .HasForeignKey("CourseId");
+
+                    b.HasOne("API_Consumer_University_test1.Models.Students", "Student")
+                        .WithMany("Grades")
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("API_Consumer_University_test1.Models.Students", b =>
+                {
+                    b.HasOne("API_Consumer_University_test1.Models.Majors", "Major")
+                        .WithMany("students")
+                        .HasForeignKey("MajorsId");
+
+                    b.Navigation("Major");
+                });
+
+            modelBuilder.Entity("CoursesMajors", b =>
+                {
+                    b.HasOne("API_Consumer_University_test1.Models.Courses", null)
+                        .WithMany()
+                        .HasForeignKey("CoursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API_Consumer_University_test1.Models.Majors", null)
+                        .WithMany()
+                        .HasForeignKey("MajorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CoursesStudents", b =>
+                {
+                    b.HasOne("API_Consumer_University_test1.Models.Students", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API_Consumer_University_test1.Models.Courses", null)
+                        .WithMany()
+                        .HasForeignKey("coursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -273,6 +531,26 @@ namespace API_Consumer_University_test1.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("API_Consumer_University_test1.Models.Courses", b =>
+                {
+                    b.Navigation("Grades");
+                });
+
+            modelBuilder.Entity("API_Consumer_University_test1.Models.Majors", b =>
+                {
+                    b.Navigation("students");
+                });
+
+            modelBuilder.Entity("API_Consumer_University_test1.Models.Students", b =>
+                {
+                    b.Navigation("Grades");
+                });
+
+            modelBuilder.Entity("API_Consumer_University_test1.Models.Teachers", b =>
+                {
+                    b.Navigation("T_courses");
                 });
 #pragma warning restore 612, 618
         }

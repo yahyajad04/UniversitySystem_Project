@@ -7,5 +7,7 @@
         public int? major_hours { get; set; }
         public double? major_cost_hour { get; set; }
         public ICollection<Students> students { get; set; } = new List<Students>();
+        public ICollection<Courses> Courses { get; set; } = new List<Courses>();
+
     }
 }

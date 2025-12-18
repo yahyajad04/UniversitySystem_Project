@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "API_University_test1.Controllers.APILoginController",
+    "Method": "Login",
+    "RelativePath": "api/APILogin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "User_Login",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API_University_test1.Controllers.CoursesController",
     "Method": "GetCourses",
     "RelativePath": "api/Courses",
@@ -85,9 +101,14 @@
         "IsRequired": true
       },
       {
-        "Name": "courses",
-        "Type": "API_University_test1.Models.Courses",
-        "IsRequired": true
+        "Name": "CName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

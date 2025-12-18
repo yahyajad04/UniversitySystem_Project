@@ -1,6 +1,10 @@
 using API_Consumer_University_test1.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +13,7 @@ var connectionString = builder.Configuration.GetConnectionString("Conn") ?? thro
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
@@ -61,6 +66,7 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

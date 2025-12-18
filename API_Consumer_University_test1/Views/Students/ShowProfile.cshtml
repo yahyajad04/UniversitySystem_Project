@@ -36,7 +36,7 @@
             @Html.DisplayFor(model => model.Phone)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.hours_term)
+            @Html.DisplayName("Hours/term")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.hours_term)
@@ -52,6 +52,12 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Major.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("Finished Hours")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Total_Hours)
         </dd>
     </dl>
 </div>

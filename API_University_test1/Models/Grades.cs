@@ -7,6 +7,7 @@
         public double second { get; set; }
         public double final { get; set; }
         public double total { get; set; }
+        public string? letter_grade { get; set; }
         public int StudentId { get; set; }   
         public int CourseId { get; set; }   
         public Students Student { get; set; }

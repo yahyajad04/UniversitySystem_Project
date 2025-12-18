@@ -12,5 +12,7 @@ namespace API_University_test1.Models
         public double? major_cost_hour { get; set; }
         [JsonIgnore]
         public ICollection<Students> students { get; set; } = new List<Students>();
+        [JsonIgnore]
+        public ICollection<Courses>? Courses { get; set; } = new List<Courses>();
     }
 }

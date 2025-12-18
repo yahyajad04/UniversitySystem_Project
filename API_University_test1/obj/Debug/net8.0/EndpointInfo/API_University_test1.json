@@ -5,6 +5,37 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/APILogin": {
+      "post": {
+        "tags": [
+          "APILogin"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User_Login"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User_Login"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/User_Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Courses": {
       "get": {
         "tags": [
@@ -141,27 +172,22 @@
               "type": "integer",
               "format": "int32"
             }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Courses"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Courses"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Courses"
-              }
+          },
+          {
+            "name": "CName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Description",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -1354,6 +1380,10 @@
             "type": "string",
             "nullable": true
           },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
           "teacherId": {
             "type": "integer",
             "format": "int32",
@@ -1370,6 +1400,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Studentdto"
+            },
+            "nullable": true
+          },
+          "majors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Majors"
             },
             "nullable": true
           },
@@ -1420,6 +1457,21 @@
             },
             "nullable": true
           },
+          "majors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Majors"
+            },
+            "nullable": true
+          },
+          "majorsId": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
           "grades": {
             "type": "array",
             "items": {
@@ -1462,6 +1514,10 @@
           "total": {
             "type": "number",
             "format": "double"
+          },
+          "letter_grade": {
+            "type": "string",
+            "nullable": true
           },
           "studentId": {
             "type": "integer",
@@ -1527,6 +1583,11 @@
             "$ref": "#/components/schemas/Majors"
           },
           "hours_term": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "total_Hours": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -1683,6 +1744,20 @@
         },
         "additionalProperties": false
       },
+      "User_Login": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "WeatherForecast": {
         "type": "object",
         "properties": {
@@ -1706,6 +1781,19 @@
         },
         "additionalProperties": false
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please insert JWT with Bearer into field. Example: Bearer {token}",
+        "name": "Authorization",
+        "in": "header"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }

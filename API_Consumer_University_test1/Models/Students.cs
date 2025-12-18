@@ -25,6 +25,6 @@ namespace API_Consumer_University_test1.Models
         public int? MajorsId { get; set; }
         public string? UserId { get; set; }
         public ICollection<Grades> Grades { get; set; } = new List<Grades>();
-        public int Total_Hours { get; set; }
+        public int? Total_Hours { get; set; }
     }
 }
